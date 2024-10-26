@@ -98,8 +98,8 @@ def compare_algorithms(amount: int, coins:list) -> tuple:
     
     return greedy_result, greedy_time, dp_result, dp_time
 
-def testing():
-    # Тестування алгоритмів
+def testing()->None:
+    """ Тестування алгоритмів """
     amount = 113
     coins = [1, 2, 5, 10, 25, 50]
     print(f"Сума: {amount}, {coins} ", end="\n\n")
@@ -107,7 +107,8 @@ def testing():
     print(f"Жадібний алгоритм: {greedy_result}, Час: {greedy_time}")
     print(f"Алгоритм динамічного програмування: {dp_result}, Час: {dp_time}")
 
-if __name__ == "__main__":
+def main()->None:
+    """ Головна функція """
     # Генерація тестових даних
     test_amounts = [113, 1113, 10113, 111307, 1113113, 11131137]
     test_coins_unsorted = [1, 2, 5, 10, 25, 50]
@@ -139,19 +140,35 @@ if __name__ == "__main__":
         print(f"Жадібний алгоритм: {greedy_result}, Час: {greedy_time:0.6f}")
         print(f"Алгоритм динамічного програмування: {dp_result}, Час: {dp_time:0.6f}", end="\n\n")
 
-    # Побудова графіку
-    plt.figure(figsize=(12, 6))
-
-    plt.plot(results["amount"], results["greedy_time_sorted"], label="Greedy (Sorted)", marker='o')
-    plt.plot(results["amount"], results["dp_time_sorted"], label="DP (Sorted)", marker='o')
-    plt.plot(results["amount"], results["greedy_time_unsorted"], label="Greedy (Unsorted)", marker='o')
-    plt.plot(results["amount"], results["dp_time_unsorted"], label="DP (Unsorted)", marker='o')
+    plt.figure("Графік порівняння", figsize=(12, 6))
+    plt.plot(
+        results["amount"],
+        results["greedy_time_sorted"],
+        label="Жадібний (відсортовані монети)",
+        marker="o",
+    )
+    plt.plot(
+        results["amount"], 
+        results["dp_time_sorted"], 
+        label="Динамічний (відсортовані монети)", marker='o')
+    plt.plot(
+        results["amount"],
+        results["greedy_time_unsorted"],
+        label="Жадібний (не відсортовані монети)",
+        marker="o",
+    )
+    plt.plot(
+        results["amount"],
+        results["dp_time_unsorted"],
+        label="Динамічний (не відсортовані монети)",
+        marker="o",
+    )
 
     plt.xscale('log')
     plt.yscale('log')
-    plt.xlabel('Amount')
-    plt.ylabel('Time (seconds)')
-    plt.title('Algorithm Efficiency Comparison')
+    plt.xlabel('Сума')
+    plt.ylabel('Час (секунди)')
+    plt.title('Порівняння алгоритмів')
     plt.legend()
     plt.grid(True, which="both", ls="--")
 
@@ -164,4 +181,8 @@ if __name__ == "__main__":
     plt.annotate(dp_efficiency, xy=(test_amounts[0], results["dp_time_sorted"][0]), xytext=(test_amounts[1], results["dp_time_sorted"][1]),
                  arrowprops=dict(facecolor='red', shrink=0.05))
     plt.savefig('algorithm_efficiency_comparison.png')
-    plt.show()
+    plt.show()    
+
+if __name__ == "__main__":
+    main()
+    #testing()
